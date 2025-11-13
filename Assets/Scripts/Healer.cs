@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class Healer : MonoBehaviour
+public class Healer : HealthChanger
 {
-    [SerializeField] private Health _target;
-
     private int _healPoint = 10;
 
-    public void Heal()
+    protected override void ChangeValue()
     {
-        if (_target != null)
+        if (Target != null)
         {
-            _target.TakeHeal(_healPoint);
+            Target.TakeHeal(_healPoint);
         }
     }
 }

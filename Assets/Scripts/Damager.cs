@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class Damager : MonoBehaviour
+public class Damager : HealthChanger
 {
-    [SerializeField] private Health _target;
-
     private int _damage = 10;
 
-    public void DealDamage()
+    protected override void ChangeValue()
     {
-        if (_target != null && _target.HealthCount > 0)
+        if (Target != null && Target.HitCount > 0)
         {
-            _target.TakeDamage(_damage);
+            Target.TakeDamage(_damage);
         }
     }
 }

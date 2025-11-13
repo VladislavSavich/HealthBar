@@ -6,9 +6,9 @@ public class Health : MonoBehaviour
     [SerializeField] private int _hitPoints = 100;
     [SerializeField] private int _maxHitPoints = 100;
 
-    public int HealthCount => _hitPoints;
-    public int MaxHealthCount => _maxHitPoints;
     public event Action Changed;
+    public int HitCount => _hitPoints;
+    public int MaxHitCount => _maxHitPoints;
 
     public void TakeDamage(int damage)
     {
@@ -19,10 +19,10 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void TakeHeal(int health)
+    public void TakeHeal(int heal)
     {
-        if (health > 0)
-            _hitPoints += health;
+        if (heal > 0)
+            _hitPoints += heal;
 
         if (_hitPoints > _maxHitPoints)
             _hitPoints = _maxHitPoints;

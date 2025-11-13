@@ -1,49 +1,18 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class HealthView : MonoBehaviour
+public abstract class HealthView : MonoBehaviour
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private TextMeshProUGUI _healPoints;
-    [SerializeField] private Slider _healSlider;
-    [SerializeField] private Slider _smoothHealSlider;
+    [SerializeField] protected Health Health;
 
-    private float _stepValue = 10f;
-    private Coroutine _smoothCoroutine;
-
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
-        _health.Changed += UpdateHealthView;
+        Health.Changed += UpdateView;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable() 
     {
-        _health.Changed -= UpdateHealthView;
+        Health.Changed -= UpdateView;
     }
 
-    private void UpdateHealthView()
-    {
-        if (_healPoints && _healSlider && _smoothHealSlider != null)
-        {
-            _healPoints.text = $"{_health.HealthCount}/{_health.MaxHealthCount}";
-            _healSlider.value = _health.HealthCount;
-
-            if (_smoothCoroutine != null)
-                StopCoroutine(_smoothCoroutine);
-
-            _smoothCoroutine = StartCoroutine(ChangeSliderValue());
-        }
-    }
-
-    private IEnumerator ChangeSliderValue()
-    {
-        while (enabled)
-        {
-            _smoothHealSlider.value = Mathf.MoveTowards(_smoothHealSlider.value, _health.HealthCount, _stepValue * Time.deltaTime);
-
-            yield return null;
-        }
-    }
+    protected abstract void UpdateView();
 }
